@@ -1,4 +1,4 @@
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import renderRoutes from './utils/renderRoutes';
 import { lazy, useEffect } from 'react';
 import LayoutProvider from './providers/LayoutProvider';
@@ -13,13 +13,17 @@ const About = lazy(() => import('./pages/landing/About'));
 const Register = lazy(() => import('./pages/auth/Register'));
 const Login = lazy(() => import('./pages/auth/Login'));
 const ForgotPassword = lazy(() => import('./pages/auth/ForgotPassword'));
+const Error404 = lazy(() => import('./pages/Error404'));
 
 export default function Routes() {
   return (
     <BrowserRouter>
       <LayoutProvider>
         <LayoutCustomer>
-          <Switch>{renderRoutes(landing_routes)}</Switch>
+          <Switch>
+            {renderRoutes(landing_routes)}
+            <Route path="*" component={Error404} />
+          </Switch>
         </LayoutCustomer>
       </LayoutProvider>
     </BrowserRouter>
