@@ -4,6 +4,16 @@ import { lazy, useEffect } from 'react';
 import LayoutProvider from './providers/LayoutProvider';
 import useLayout from './hooks/useLayout';
 import LayoutCustomer from './customers/LayoutCustomer';
+import {
+  CONTACT,
+  FORGOT_PASSWORD,
+  LOGIN,
+  REGISTER,
+  FAQs as FAQs_ROUTE,
+  PRICES,
+  ABOUT,
+  HOME,
+} from './constants/routes';
 
 const Home = lazy(() => import('./pages/landing/Home'));
 const FAQs = lazy(() => import('./pages/landing/FAQs'));
@@ -42,39 +52,39 @@ const LayoutResolver = (Component, layout) => (props) => {
 };
 
 const landing_routes = [
-  { path: '/', component: () => LayoutResolver(Home, 'landing'), exact: true },
+  { path: HOME, component: () => LayoutResolver(Home, 'landing'), exact: true },
   {
-    path: '/nosotros',
+    path: ABOUT,
     component: () => LayoutResolver(About, 'landing'),
     exact: true,
   },
   {
-    path: '/planes-y-precios',
+    path: PRICES,
     component: () => LayoutResolver(Prices, 'landing'),
     exact: true,
   },
   {
-    path: '/preguntas-frecuentes',
+    path: FAQs_ROUTE,
     component: () => LayoutResolver(FAQs, 'landing'),
     exact: true,
   },
   {
-    path: '/contacto',
+    path: CONTACT,
     component: () => LayoutResolver(Contact, 'landing'),
     exact: true,
   },
   {
-    path: '/registrarse',
+    path: REGISTER,
     component: () => LayoutResolver(Register, 'auth'),
     exact: true,
   },
   {
-    path: '/ingresar',
+    path: LOGIN,
     component: () => LayoutResolver(Login, 'auth'),
     exact: true,
   },
   {
-    path: '/recuperar-clave',
+    path: FORGOT_PASSWORD,
     component: () => LayoutResolver(ForgotPassword, 'auth'),
     exact: true,
   },

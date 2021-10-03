@@ -1,3 +1,12 @@
+import {
+  ABOUT,
+  CONTACT,
+  FAQs,
+  HOME,
+  LOGIN,
+  PRICES,
+  REGISTER,
+} from '@/constants/routes';
 import { Suspense } from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -8,25 +17,25 @@ export default function LandingLayout({ children }) {
         <nav>
           <ul>
             <li>
-              <NavLink to="/">Inicio</NavLink>
+              <NavLink to={HOME}>Inicio</NavLink>
             </li>
             <li>
-              <NavLink to="/contacto">Contacto</NavLink>
+              <NavLink to={CONTACT}>Contacto</NavLink>
             </li>
             <li>
-              <NavLink to="/nosotros">Nosotros</NavLink>
+              <NavLink to={ABOUT}>Nosotros</NavLink>
             </li>
             <li>
-              <NavLink to="/planes-y-precios">Precios</NavLink>
+              <NavLink to={PRICES}>Precios</NavLink>
             </li>
             <li>
-              <NavLink to="/preguntas-frecuentes">Preguntas frecuentes</NavLink>
+              <NavLink to={FAQs}>Preguntas frecuentes</NavLink>
             </li>
             <li>
-              <NavLink to="/registrarse">Crearse una cuenta</NavLink>
+              <NavLink to={REGISTER}>Crearse una cuenta</NavLink>
             </li>
             <li>
-              <NavLink to="/ingresar">Ingresar</NavLink>
+              <NavLink to={LOGIN}>Ingresar</NavLink>
             </li>
           </ul>
         </nav>
