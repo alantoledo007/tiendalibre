@@ -12,6 +12,7 @@ const inputs = [
 export default function CreateStore() {
   const inputsRef = useRef({});
   const submitRef = useRef(null);
+  const formRef = useRef(null);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -23,13 +24,17 @@ export default function CreateStore() {
         inputsRef.current[item.inputProps.name].value;
     });
 
-    createStore(data).finally(() => {
-      submitRef.current.disabled = false;
-    });
+    createStore(data)
+      .then(() => {
+        formRef.current.reset();
+      })
+      .finally(() => {
+        submitRef.current.disabled = false;
+      });
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <form ref={formRef} onSubmit={onSubmit}>
       {inputs.map((item) => (
         <div key={item.inputProps.id}>
           <label htmlFor={item.inputProps.id}>{item.label}</label>
