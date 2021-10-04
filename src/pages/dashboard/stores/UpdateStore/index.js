@@ -1,6 +1,8 @@
 import { STORE_DETAILS } from '@/constants/routes';
 import { updateStore } from '@/firebase/stores';
-import useStore from '@/hooks/useStore';
+import useDashboard from '@/hooks/useDashboard';
+import useDashboardStore from '@/hooks/useDashboardStore';
+import useDashboardStoreUnmount from '@/hooks/useDashboardStoreUnmount';
 import { useRef } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -15,9 +17,11 @@ const inputs = [
 export default function UpdateStore() {
   const history = useHistory();
   const { id } = useParams();
-  const { data, loading, exists } = useStore(id);
+  const { data, loading, exists } = useDashboardStore(id);
+  const { refreshStores } = useDashboard();
   const submitRef = useRef(null);
   const inputsRef = useRef({});
+  useDashboardStoreUnmount();
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -30,7 +34,8 @@ export default function UpdateStore() {
     });
 
     updateStore(id, data)
-      .then(() => {
+      .then(async () => {
+        await refreshStores();
         history.push(STORE_DETAILS.replace(':id', id));
       })
       .catch(() => {

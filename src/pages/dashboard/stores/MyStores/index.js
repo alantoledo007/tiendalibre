@@ -1,9 +1,11 @@
 import { STORE_DETAILS } from '@/constants/routes';
-import useStores from '@/hooks/useStores';
+import useDashboard from '@/hooks/useDashboard';
 import { Link } from 'react-router-dom';
 
 export default function MyStores() {
-  const { data, loading } = useStores();
+  const {
+    stores: { data, loading },
+  } = useDashboard();
   return (
     <>
       <p>MyStores</p>

@@ -1,10 +1,13 @@
 import { DELETE_STORE, UPDATE_STORE } from '@/constants/routes';
-import useStore from '@/hooks/useStore';
+import useDashboardStore from '@/hooks/useDashboardStore';
+import useDashboardStoreUnmount from '@/hooks/useDashboardStoreUnmount';
 import { Link, useParams } from 'react-router-dom';
 
 export default function StoreDetails() {
   const { id } = useParams();
-  const { data, loading, exists } = useStore(id);
+  const { data, loading, exists } = useDashboardStore(id);
+  useDashboardStoreUnmount();
+
   return (
     <>
       <p>StoreDetails</p>

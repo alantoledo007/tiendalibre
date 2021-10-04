@@ -1,21 +1,26 @@
 import { MY_STORES, STORE_DETAILS } from '@/constants/routes';
 import { deleteStore } from '@/firebase/stores';
-import useStore from '@/hooks/useStore';
+import useDashboard from '@/hooks/useDashboard';
+import useDashboardStore from '@/hooks/useDashboardStore';
+import useDashboardStoreUnmount from '@/hooks/useDashboardStoreUnmount';
 import { useRef } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 export default function DeleteStore() {
   const history = useHistory();
   const { id } = useParams();
-  const { data, loading, exists } = useStore(id);
+  const { data, loading, exists } = useDashboardStore(id);
+  const { refreshStores } = useDashboard();
   const buttonsRef = useRef({});
+  useDashboardStoreUnmount();
 
   const onConfirm = () => {
     buttonsRef.current.delete.disabled = true;
     buttonsRef.current.cancel.disabled = true;
 
     deleteStore(id)
-      .then(() => {
+      .then(async () => {
+        await refreshStores();
         history.replace(MY_STORES);
       })
       .catch(() => {

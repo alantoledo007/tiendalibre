@@ -5,6 +5,7 @@ export default function useStores() {
   const [data, setData] = useState(undefined);
 
   useEffect(() => {
+    if (data !== undefined) return;
     let isMounted = true;
     getStores().then((data) => {
       isMounted && setData(data);
@@ -13,7 +14,11 @@ export default function useStores() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [data]);
 
-  return { data, loading: data === undefined };
+  return {
+    data,
+    loading: data === undefined,
+    refresh: () => setData(undefined),
+  };
 }

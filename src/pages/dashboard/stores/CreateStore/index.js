@@ -1,5 +1,8 @@
+import { MY_STORES } from '@/constants/routes';
 import { createStore } from '@/firebase/stores';
+import useDashboard from '@/hooks/useDashboard';
 import { useRef } from 'react';
+import { useHistory } from 'react-router';
 
 const inputs = [
   {
@@ -13,6 +16,8 @@ export default function CreateStore() {
   const inputsRef = useRef({});
   const submitRef = useRef(null);
   const formRef = useRef(null);
+  const { refreshStores } = useDashboard();
+  const history = useHistory();
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -25,10 +30,12 @@ export default function CreateStore() {
     });
 
     createStore(data)
-      .then(() => {
+      .then(async () => {
+        await refreshStores();
         formRef.current.reset();
+        history.push(MY_STORES);
       })
-      .finally(() => {
+      .catch(() => {
         submitRef.current.disabled = false;
       });
   };

@@ -1,9 +1,10 @@
 import { CREATE_STORE, DASHBOARD, MY_STORES } from '@/constants/routes';
+import DashboardProvider from '@/providers/DashboardProvider';
 import { NavLink } from 'react-router-dom';
 
 export default function DashboardLayout({ children }) {
   return (
-    <>
+    <DashboardProvider>
       <header>
         <nav>
           <ul>
@@ -25,6 +26,6 @@ export default function DashboardLayout({ children }) {
         </nav>
       </header>
       <main>{children}</main>
-    </>
+    </DashboardProvider>
   );
 }
