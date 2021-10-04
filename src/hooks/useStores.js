@@ -5,9 +5,14 @@ export default function useStores() {
   const [data, setData] = useState(undefined);
 
   useEffect(() => {
+    let isMount = true;
     getStores().then((data) => {
-      setData(data);
+      isMount && setData(data);
     });
+
+    return () => {
+      isMount = false;
+    };
   }, []);
 
   return { data, loading: data === undefined };
