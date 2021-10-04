@@ -1,4 +1,6 @@
+import { STORE_DETAILS } from '@/constants/routes';
 import useStores from '@/hooks/useStores';
+import { Link } from 'react-router-dom';
 
 export default function MyStores() {
   const { data, loading } = useStores();
@@ -10,7 +12,10 @@ export default function MyStores() {
       ) : (
         <div>
           {data.map((item) => (
-            <div key={item.id}>{item.name}</div>
+            <div key={item.id}>
+              <span>{item.name}</span>{' '}
+              <Link to={STORE_DETAILS.replace(':id', item.id)}>ir</Link>
+            </div>
           ))}
         </div>
       )}

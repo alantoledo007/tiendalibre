@@ -20,3 +20,22 @@ export const getStores = () => {
       return data;
     });
 };
+
+export const getStore = (id) => {
+  return collection()
+    .doc(id)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      }
+      return null;
+    });
+};
+
+export const deleteStore = (id) => {
+  return collection().doc(id).delete();
+};
