@@ -39,3 +39,7 @@ export const getStore = (id) => {
 export const deleteStore = (id) => {
   return collection().doc(id).delete();
 };
+
+export const updateStore = (id, data) => {
+  return collection().doc(id).update(data);
+};
