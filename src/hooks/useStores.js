@@ -5,13 +5,13 @@ export default function useStores() {
   const [data, setData] = useState(undefined);
 
   useEffect(() => {
-    let isMount = true;
+    let isMounted = true;
     getStores().then((data) => {
-      isMount && setData(data);
+      isMounted && setData(data);
     });
 
     return () => {
-      isMount = false;
+      isMounted = false;
     };
   }, []);
 
