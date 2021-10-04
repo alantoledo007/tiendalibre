@@ -1,3 +1,4 @@
+import { createStore } from '@/firebase/stores';
 import { useRef } from 'react';
 
 const inputs = [
@@ -22,7 +23,9 @@ export default function CreateStore() {
         inputsRef.current[item.inputProps.name].value;
     });
 
-    console.log(data);
+    createStore(data).finally(() => {
+      submitRef.current.disabled = false;
+    });
   };
 
   return (

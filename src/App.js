@@ -1,3 +1,4 @@
+import './firebase/starter';
 import Routes from './Routes';
 
 function App() {
