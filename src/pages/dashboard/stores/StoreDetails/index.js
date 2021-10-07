@@ -2,6 +2,7 @@ import { DELETE_STORE, UPDATE_STORE } from '@/constants/routes';
 import useDashboardStore from '@/hooks/useDashboardStore';
 import useDashboardStoreUnmount from '@/hooks/useDashboardStoreUnmount';
 import { Link, useParams } from 'react-router-dom';
+import { DASHBOARD_PRODUCTS } from '@/constants/routes';
 
 export default function StoreDetails() {
   const { id } = useParams();
@@ -25,6 +26,11 @@ export default function StoreDetails() {
             </li>
             <li>
               <Link to={DELETE_STORE.replace(':id', id)}>Borrar</Link>
+            </li>
+            <li>
+              <Link to={DASHBOARD_PRODUCTS.replace(':store_id', id)}>
+                Productos
+              </Link>
             </li>
           </ul>
         </div>

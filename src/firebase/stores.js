@@ -2,6 +2,8 @@ import firebase from 'firebase/app';
 
 const collection = () => firebase.firestore().collection('stores');
 
+export const storeRef = (id) => collection().doc(id);
+
 export const createStore = (data) => {
   return collection().add(data);
 };

@@ -19,6 +19,11 @@ import {
   UPDATE_STORE,
   STORE_DETAILS,
   DELETE_STORE,
+  DASHBOARD_PRODUCTS,
+  CREATE_PRODUCT,
+  UPDATE_PRODUCT,
+  DELETE_PRODUCT,
+  DASHBOARD_PRODUCT_DETAILS,
 } from './constants/routes';
 import {
   AUTH,
@@ -46,6 +51,21 @@ const DeleteStore = lazy(() => import('./pages/dashboard/stores/DeleteStore'));
 const UpdateStore = lazy(() => import('./pages/dashboard/stores/UpdateStore'));
 const StoreDetails = lazy(() =>
   import('./pages/dashboard/stores/StoreDetails'),
+);
+const DashboardProducts = lazy(() =>
+  import('./pages/dashboard/stores/products/Products'),
+);
+const CreateProduct = lazy(() =>
+  import('./pages/dashboard/stores/products/CreateProduct'),
+);
+const DeleteProduct = lazy(() =>
+  import('./pages/dashboard/stores/products/DeleteProduct'),
+);
+const UpdateProduct = lazy(() =>
+  import('./pages/dashboard/stores/products/UpdateProduct'),
+);
+const DashboardProductDetails = lazy(() =>
+  import('./pages/dashboard/stores/products/ProductDetails'),
 );
 
 //Errors
@@ -147,6 +167,31 @@ const landing_routes = [
   {
     path: STORE_DETAILS,
     component: () => LayoutResolver(StoreDetails, DASHBOARD_LAYOUT),
+    exact: true,
+  },
+  {
+    path: DASHBOARD_PRODUCTS,
+    component: () => LayoutResolver(DashboardProducts, DASHBOARD_LAYOUT),
+    exact: true,
+  },
+  {
+    path: CREATE_PRODUCT,
+    component: () => LayoutResolver(CreateProduct, DASHBOARD_LAYOUT),
+    exact: true,
+  },
+  {
+    path: UPDATE_PRODUCT,
+    component: () => LayoutResolver(UpdateProduct, DASHBOARD_LAYOUT),
+    exact: true,
+  },
+  {
+    path: DELETE_PRODUCT,
+    component: () => LayoutResolver(DeleteProduct, DASHBOARD_LAYOUT),
+    exact: true,
+  },
+  {
+    path: DASHBOARD_PRODUCT_DETAILS,
+    component: () => LayoutResolver(DashboardProductDetails, DASHBOARD_LAYOUT),
     exact: true,
   },
 ];

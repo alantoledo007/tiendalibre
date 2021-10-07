@@ -9,6 +9,7 @@ import {
 } from '@/constants/routes';
 import { Suspense } from 'react';
 import { NavLink } from 'react-router-dom';
+import { DASHBOARD } from '@/constants/routes';
 
 export default function LandingLayout({ children }) {
   return (
@@ -36,6 +37,9 @@ export default function LandingLayout({ children }) {
             </li>
             <li>
               <NavLink to={LOGIN}>Ingresar</NavLink>
+            </li>
+            <li>
+              <NavLink to={DASHBOARD}>Tablero</NavLink>
             </li>
           </ul>
         </nav>
