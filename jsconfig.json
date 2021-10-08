@@ -1,8 +1,4 @@
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  }
+  "extends": "./jsconfig.paths.json",
+  "exclude": ["node_modules"]
 }
