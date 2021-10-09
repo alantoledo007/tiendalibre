@@ -1,7 +1,7 @@
 import { getProduct } from '@/firebase/products';
 import { useEffect, useState } from 'react';
 
-export default function useProduct(id) {
+export default function useProduct(id, config = {}) {
   const [data, setData] = useState(undefined);
   const [cache, setCache] = useState(undefined);
 
@@ -14,7 +14,7 @@ export default function useProduct(id) {
       }
     }
     let isMounted = true;
-    getProduct(id).then((data) => {
+    getProduct(id, config).then((data) => {
       if (isMounted) {
         setData(data);
       }

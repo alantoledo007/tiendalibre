@@ -26,16 +26,30 @@ export const getProducts = (store_id) => {
     });
 };
 
-export const getProduct = (id) => {
+export const getProduct = (id, { store }) => {
   return collection()
     .doc(id)
     .get()
     .then((doc) => {
       if (doc.exists) {
-        return {
+        const data = {
           id: doc.id,
           ...doc.data(),
         };
+
+        if (store === true) {
+          return data.store_ref.get().then((store) => {
+            if (store.exists) {
+              data.store = {
+                id: store.id,
+                ...store.data(),
+              };
+              return data;
+            }
+            return null;
+          });
+        }
+        return data;
       }
       return null;
     });

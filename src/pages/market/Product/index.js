@@ -6,15 +6,17 @@ import { useHistory, useParams } from 'react-router';
 export default function Product() {
   const { product_slug, slug: store_slug } = useParams();
   const { id, slug } = useSlugResolver(product_slug);
-  const { data, loading, exists } = useProduct(id);
+  const { data, loading, exists } = useProduct(id, { store: true });
   const history = useHistory();
+
+  console.log(data);
 
   useEffect(() => {
     if (loading === false && exists) {
       const correct_slug = data.title.replaceAll(' ', '-');
-      if (correct_slug !== slug) {
+      if (correct_slug !== slug || store_slug !== data.store.slug) {
         history.replace(
-          PRODUCT.replace(':slug', store_slug).replace(
+          PRODUCT.replace(':slug', data.store.slug).replace(
             ':product_slug',
             `${correct_slug}-${data.id}`,
           ),
