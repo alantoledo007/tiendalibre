@@ -9,8 +9,6 @@ export default function Product() {
   const { data, loading, exists } = useProduct(id, { store: true });
   const history = useHistory();
 
-  console.log(data);
-
   useEffect(() => {
     if (loading === false && exists) {
       const correct_slug = data.title.replaceAll(' ', '-');
