@@ -1,15 +1,20 @@
 import firebase from 'firebase/app';
+import { getCurrentUser } from './auth';
+import { userRef } from './users';
 
 const collection = () => firebase.firestore().collection('stores');
 
 export const storeRef = (id) => collection().doc(id);
 
 export const createStore = (data) => {
+  data.created_at = firebase.firestore.FieldValue.serverTimestamp();
+  data.user_ref = userRef(getCurrentUser().uid);
   return collection().add(data);
 };
 
 export const getStores = () => {
   return collection()
+    .where('user_ref', '==', userRef(getCurrentUser().uid))
     .get()
     .then((docs) => {
       const data = [];
@@ -58,5 +63,6 @@ export const deleteStore = (id) => {
 };
 
 export const updateStore = (id, data) => {
+  data.updated_at = firebase.firestore.FieldValue.serverTimestamp();
   return collection().doc(id).update(data);
 };

@@ -1,4 +1,5 @@
 import { CREATE_STORE, DASHBOARD, MY_STORES } from '@/constants/routes';
+import { logout } from '@/firebase/auth';
 import DashboardProvider from '@/providers/DashboardProvider';
 import { NavLink } from 'react-router-dom';
 
@@ -20,7 +21,7 @@ export default function DashboardLayout({ children }) {
               </ul>
             </li>
             <li>
-              <button>Cerrar sesión</button>
+              <button onClick={logout}>Cerrar sesión</button>
             </li>
           </ul>
         </nav>

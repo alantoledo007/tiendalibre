@@ -1,5 +1,7 @@
 import firebase from 'firebase/app';
+import { getCurrentUser } from './auth';
 import { storeRef } from './stores';
+import { userRef } from './users';
 
 const collection = () => firebase.firestore().collection('products');
 
@@ -7,12 +9,14 @@ export const createProduct = (data) => {
   data.created_at = firebase.firestore.FieldValue.serverTimestamp();
   data.price = parseFloat(data.price);
   data.stock = parseInt(data.stock);
+  data.user_ref = userRef(getCurrentUser().uid);
   return collection().add(data);
 };
 
 export const getProducts = (store_id) => {
   return collection()
     .where('store_ref', '==', storeRef(store_id))
+    .where('user_ref', '==', userRef(getCurrentUser().uid))
     .get()
     .then((docs) => {
       const data = [];

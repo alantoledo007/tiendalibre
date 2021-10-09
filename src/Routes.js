@@ -1,4 +1,4 @@
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import renderRoutes from './utils/renderRoutes';
 import { lazy, useEffect } from 'react';
 import LayoutProvider from './providers/LayoutProvider';
@@ -33,6 +33,7 @@ import {
   LANDING,
   DASHBOARD as DASHBOARD_LAYOUT,
 } from './constants/layouts';
+import useUser from './hooks/useUser';
 
 //Landing
 const Home = lazy(() => import('./pages/landing/Home'));
@@ -79,12 +80,14 @@ const Product = lazy(() => import('./pages/market/Product'));
 const Error404 = lazy(() => import('./pages/Error404'));
 
 export default function Routes() {
+  const user = useUser();
   return (
     <BrowserRouter>
       <LayoutProvider>
         <LayoutCustomer>
           <Switch>
-            {renderRoutes(landing_routes)}
+            {user.isUnknow && <Route path="*">cargando...</Route>}
+            {renderRoutes(landing_routes, user)}
             <Route path="*" component={Error404} />
           </Switch>
         </LayoutCustomer>
@@ -103,6 +106,12 @@ const LayoutResolver = (Component, layout) => (props) => {
   if (current !== layout) return null;
   return <Component {...props} />;
 };
+
+const authHandler = (Component) => (user) =>
+  !user.isAuthenticated ? Component : () => <Redirect to={DASHBOARD_PATH} />;
+
+const dashboardHandler = (Component) => (user) =>
+  user.isAuthenticated ? Component : () => <Redirect to={LOGIN} />;
 
 const landing_routes = [
   //LANDING
@@ -131,74 +140,84 @@ const landing_routes = [
   //AUTH
   {
     path: REGISTER,
-    component: () => LayoutResolver(Register, AUTH),
+    component: authHandler(LayoutResolver(Register, AUTH)),
     exact: true,
   },
   {
     path: LOGIN,
-    component: () => LayoutResolver(Login, AUTH),
+    component: authHandler(LayoutResolver(Login, AUTH)),
     exact: true,
   },
   {
     path: FORGOT_PASSWORD,
-    component: () => LayoutResolver(ForgotPassword, AUTH),
+    component: authHandler(LayoutResolver(ForgotPassword, AUTH)),
     exact: true,
   },
 
   //DASHBOARD
   {
     path: DASHBOARD_PATH,
-    component: () => LayoutResolver(Dashboard, DASHBOARD_LAYOUT),
+    component: dashboardHandler(LayoutResolver(Dashboard, DASHBOARD_LAYOUT)),
     exact: true,
   },
   {
     path: MY_STORES,
-    component: () => LayoutResolver(MyStores, DASHBOARD_LAYOUT),
+    component: dashboardHandler(LayoutResolver(MyStores, DASHBOARD_LAYOUT)),
     exact: true,
   },
   {
     path: CREATE_STORE,
-    component: () => LayoutResolver(CreateStore, DASHBOARD_LAYOUT),
+    component: dashboardHandler(LayoutResolver(CreateStore, DASHBOARD_LAYOUT)),
     exact: true,
   },
   {
     path: UPDATE_STORE,
-    component: () => LayoutResolver(UpdateStore, DASHBOARD_LAYOUT),
+    component: dashboardHandler(LayoutResolver(UpdateStore, DASHBOARD_LAYOUT)),
     exact: true,
   },
   {
     path: DELETE_STORE,
-    component: () => LayoutResolver(DeleteStore, DASHBOARD_LAYOUT),
+    component: dashboardHandler(LayoutResolver(DeleteStore, DASHBOARD_LAYOUT)),
     exact: true,
   },
   {
     path: STORE_DETAILS,
-    component: () => LayoutResolver(StoreDetails, DASHBOARD_LAYOUT),
+    component: dashboardHandler(LayoutResolver(StoreDetails, DASHBOARD_LAYOUT)),
     exact: true,
   },
   {
     path: DASHBOARD_PRODUCTS,
-    component: () => LayoutResolver(DashboardProducts, DASHBOARD_LAYOUT),
+    component: dashboardHandler(
+      LayoutResolver(DashboardProducts, DASHBOARD_LAYOUT),
+    ),
     exact: true,
   },
   {
     path: CREATE_PRODUCT,
-    component: () => LayoutResolver(CreateProduct, DASHBOARD_LAYOUT),
+    component: dashboardHandler(
+      LayoutResolver(CreateProduct, DASHBOARD_LAYOUT),
+    ),
     exact: true,
   },
   {
     path: UPDATE_PRODUCT,
-    component: () => LayoutResolver(UpdateProduct, DASHBOARD_LAYOUT),
+    component: dashboardHandler(
+      LayoutResolver(UpdateProduct, DASHBOARD_LAYOUT),
+    ),
     exact: true,
   },
   {
     path: DELETE_PRODUCT,
-    component: () => LayoutResolver(DeleteProduct, DASHBOARD_LAYOUT),
+    component: dashboardHandler(
+      LayoutResolver(DeleteProduct, DASHBOARD_LAYOUT),
+    ),
     exact: true,
   },
   {
     path: DASHBOARD_PRODUCT_DETAILS,
-    component: () => LayoutResolver(DashboardProductDetails, DASHBOARD_LAYOUT),
+    component: dashboardHandler(
+      LayoutResolver(DashboardProductDetails, DASHBOARD_LAYOUT),
+    ),
     exact: true,
   },
 
