@@ -24,6 +24,9 @@ import {
   UPDATE_PRODUCT,
   DELETE_PRODUCT,
   DASHBOARD_PRODUCT_DETAILS,
+  STORE,
+  PRODUCT,
+  CART,
 } from './constants/routes';
 import {
   AUTH,
@@ -67,6 +70,10 @@ const UpdateProduct = lazy(() =>
 const DashboardProductDetails = lazy(() =>
   import('./pages/dashboard/stores/products/ProductDetails'),
 );
+
+//Market
+const Store = lazy(() => import('./pages/market/Store'));
+const Product = lazy(() => import('./pages/market/Product'));
 
 //Errors
 const Error404 = lazy(() => import('./pages/Error404'));
@@ -192,6 +199,24 @@ const landing_routes = [
   {
     path: DASHBOARD_PRODUCT_DETAILS,
     component: () => LayoutResolver(DashboardProductDetails, DASHBOARD_LAYOUT),
+    exact: true,
+  },
+
+  //MARKET
+
+  {
+    path: STORE,
+    component: () => LayoutResolver(Store, AUTH),
+    exact: true,
+  },
+  {
+    path: PRODUCT,
+    component: () => LayoutResolver(Product, AUTH),
+    exact: true,
+  },
+  {
+    path: CART,
+    component: () => LayoutResolver(Register, AUTH),
     exact: true,
   },
 ];

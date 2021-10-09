@@ -23,7 +23,22 @@ export const getStores = () => {
     });
 };
 
-export const getStore = (id) => {
+export const getStore = (id, config) => {
+  if (config?.slug === true) {
+    return collection()
+      .where('slug', '==', id)
+      .get()
+      .then((res) => {
+        if (res.docs.length < 1) {
+          return null;
+        }
+        const doc = res.docs[0];
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+  }
   return collection()
     .doc(id)
     .get()

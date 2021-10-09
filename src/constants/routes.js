@@ -22,3 +22,8 @@ export const CREATE_PRODUCT = `${MY_STORES}/:store_id/productos/nuevo`;
 export const UPDATE_PRODUCT = `${MY_STORES}/:store_id/productos/:product_id/modificar`;
 export const DELETE_PRODUCT = `${MY_STORES}/:store_id/productos/:product_id/borrar`;
 export const DASHBOARD_PRODUCT_DETAILS = `${MY_STORES}/:store_id/productos/:product_id`;
+
+//MARKET
+export const STORE = '/:slug';
+export const PRODUCT = `${STORE}/:product_slug`;
+export const CART = `${STORE}/carrito`;
