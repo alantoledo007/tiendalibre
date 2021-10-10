@@ -1,7 +1,7 @@
-import _ from 'lodash';
+import { groupBy } from 'lodash';
 
 export default function useCheckout(items) {
-  const items_by_store = _.groupBy(items, 'store_id');
+  const items_by_store = groupBy(items, 'store_id');
 
   return {
     items_by_store,

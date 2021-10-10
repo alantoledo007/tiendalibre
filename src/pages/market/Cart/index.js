@@ -1,3 +1,6 @@
+import { createOrders } from '@/firebase/orders';
+import { productRef } from '@/firebase/products';
+import { storeRef } from '@/firebase/stores';
 import useCart from '@/hooks/useCart';
 import useCheckout from '@/hooks/useCheckout';
 import { useRef, useState } from 'react';
@@ -64,6 +67,10 @@ const inputs = [
       id: 'document_number',
     },
   },
+  {
+    label: 'E-Mail',
+    inputProps: { type: 'text', name: 'email', id: 'email' },
+  },
 ];
 
 const Checkout = ({ items, total, setCheckout, clearCart }) => {
@@ -83,11 +90,36 @@ const Checkout = ({ items, total, setCheckout, clearCart }) => {
         inputsRef.current[item.inputProps.name].value;
     });
 
-    // createOrder(data)
-    //   .then(async () => {})
-    //   .catch(() => {
-    //     submitRef.current.disabled = false;
-    //   });
+    const orders = Object.values(items_by_store).map((items) => {
+      return {
+        client: data,
+        store: {
+          id: items[0].store_id,
+          ref: storeRef(items[0].store_id),
+          name: items[0].store_name,
+        },
+        items: items.map((item) => ({
+          id: item.product_id,
+          ref: productRef(item.product_id),
+          title: item.title,
+          price: item.price,
+          quantity: item.quantity,
+          subtotal: item.subtotal,
+        })),
+        total: items.reduce((acc, item) => {
+          return acc + item.subtotal;
+        }, 0),
+      };
+    });
+
+    createOrders(orders)
+      .then(async () => {
+        clearCart();
+      })
+      .catch(() => {
+        buttonsRef.current.submit.disabled = false;
+        buttonsRef.current.cancel.disabled = false;
+      });
   };
 
   return (

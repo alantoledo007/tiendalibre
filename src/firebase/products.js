@@ -5,6 +5,8 @@ import { userRef } from './users';
 
 const collection = () => firebase.firestore().collection('products');
 
+export const productRef = (id) => collection().doc(id);
+
 export const createProduct = (data) => {
   data.created_at = firebase.firestore.FieldValue.serverTimestamp();
   data.price = parseFloat(data.price);

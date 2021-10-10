@@ -1,5 +1,4 @@
 import './firebase/starter';
-import 'lodash/array';
 import { Provider as ReduxProvider } from 'react-redux';
 import store from './redux/store';
 import Routes from './Routes';
