@@ -26,4 +26,4 @@ export const DASHBOARD_PRODUCT_DETAILS = `${MY_STORES}/:store_id/productos/:prod
 //MARKET
 export const STORE = '/:slug';
 export const PRODUCT = `${STORE}/:product_slug`;
-export const CART = `${STORE}/carrito`;
+export const CART = `/carrito`;

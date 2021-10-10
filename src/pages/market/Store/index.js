@@ -28,7 +28,7 @@ export default function Store() {
 }
 
 const ProductList = ({ store_id, store_slug }) => {
-  const { data, loading } = useProducts(store_id);
+  const { data, loading } = useProducts(store_id, { market: true });
 
   if (loading) {
     return <div>cargando productos...</div>;
@@ -46,7 +46,7 @@ const ProductList = ({ store_id, store_slug }) => {
                 ':product_slug',
                 `${item.title.replaceAll(' ', '-')}-${item.id}`,
               )}>
-              sad
+              Ver detalles
             </Link>
           </div>
         </div>

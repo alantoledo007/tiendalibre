@@ -75,6 +75,7 @@ const DashboardProductDetails = lazy(() =>
 //Market
 const Store = lazy(() => import('./pages/market/Store'));
 const Product = lazy(() => import('./pages/market/Product'));
+const Cart = lazy(() => import('./pages/market/Cart'));
 
 //Errors
 const Error404 = lazy(() => import('./pages/Error404'));
@@ -222,7 +223,11 @@ const landing_routes = [
   },
 
   //MARKET
-
+  {
+    path: CART,
+    component: () => LayoutResolver(Cart, AUTH),
+    exact: true,
+  },
   {
     path: STORE,
     component: () => LayoutResolver(Store, AUTH),
@@ -231,11 +236,6 @@ const landing_routes = [
   {
     path: PRODUCT,
     component: () => LayoutResolver(Product, AUTH),
-    exact: true,
-  },
-  {
-    path: CART,
-    component: () => LayoutResolver(Register, AUTH),
     exact: true,
   },
 ];

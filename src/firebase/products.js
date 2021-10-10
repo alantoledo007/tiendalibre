@@ -13,21 +13,23 @@ export const createProduct = (data) => {
   return collection().add(data);
 };
 
-export const getProducts = (store_id) => {
-  return collection()
-    .where('store_ref', '==', storeRef(store_id))
-    .where('user_ref', '==', userRef(getCurrentUser().uid))
-    .get()
-    .then((docs) => {
-      const data = [];
-      docs.forEach((doc) => {
-        data.push({
-          id: doc.id,
-          ...doc.data(),
-        });
+export const getProducts = (store_id, { market }) => {
+  const ref = collection().where('store_ref', '==', storeRef(store_id));
+
+  if (!market) {
+    ref.where('user_ref', '==', userRef(getCurrentUser().uid));
+  }
+
+  return ref.get().then((docs) => {
+    const data = [];
+    docs.forEach((doc) => {
+      data.push({
+        id: doc.id,
+        ...doc.data(),
       });
-      return data;
     });
+    return data;
+  });
 };
 
 export const getProduct = (id, { store }) => {
