@@ -71,6 +71,10 @@ const inputs = [
     label: 'E-Mail',
     inputProps: { type: 'text', name: 'email', id: 'email' },
   },
+  {
+    label: 'Teléfono',
+    inputProps: { type: 'text', name: 'phone', id: 'phone' },
+  },
 ];
 
 const Checkout = ({ items, total, setCheckout, clearCart }) => {

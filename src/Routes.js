@@ -27,6 +27,8 @@ import {
   STORE,
   PRODUCT,
   CART,
+  DASHBOARD_ORDERS,
+  DASHBOARD_ORDER_DETAILS,
 } from './constants/routes';
 import {
   AUTH,
@@ -70,6 +72,10 @@ const UpdateProduct = lazy(() =>
 );
 const DashboardProductDetails = lazy(() =>
   import('./pages/dashboard/stores/products/ProductDetails'),
+);
+const Orders = lazy(() => import('./pages/dashboard/orders/Orders'));
+const OrderDetails = lazy(() =>
+  import('./pages/dashboard/orders/OrderDetails'),
 );
 
 //Market
@@ -219,6 +225,16 @@ const landing_routes = [
     component: dashboardHandler(
       LayoutResolver(DashboardProductDetails, DASHBOARD_LAYOUT),
     ),
+    exact: true,
+  },
+  {
+    path: DASHBOARD_ORDERS,
+    component: dashboardHandler(LayoutResolver(Orders, DASHBOARD_LAYOUT)),
+    exact: true,
+  },
+  {
+    path: DASHBOARD_ORDER_DETAILS,
+    component: dashboardHandler(LayoutResolver(OrderDetails, DASHBOARD_LAYOUT)),
     exact: true,
   },
 
