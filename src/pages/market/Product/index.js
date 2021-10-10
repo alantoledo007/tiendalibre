@@ -44,7 +44,13 @@ export default function Product() {
       {data.stock > 0 && (
         <div>
           {!inCart ? (
-            <button onClick={() => addToCart(data, data.store.id)}>
+            <button
+              onClick={() =>
+                addToCart(data, {
+                  store_id: data.store.id,
+                  store_name: data.store.name,
+                })
+              }>
               Añadir al carrito
             </button>
           ) : (

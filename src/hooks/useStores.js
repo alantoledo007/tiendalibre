@@ -1,13 +1,13 @@
 import { getStores } from '@/firebase/stores';
 import { useEffect, useState } from 'react';
 
-export default function useStores() {
+export default function useStores(config = {}) {
   const [data, setData] = useState(undefined);
 
   useEffect(() => {
     if (data !== undefined) return;
     let isMounted = true;
-    getStores().then((data) => {
+    getStores(config).then((data) => {
       isMounted && setData(data);
     });
 

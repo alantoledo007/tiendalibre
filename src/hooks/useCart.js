@@ -1,4 +1,4 @@
-import { removeProduct, updateQuantity } from '@/redux/slices/cart';
+import { clearCart, removeProduct, updateQuantity } from '@/redux/slices/cart';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function useCart() {
@@ -17,6 +17,10 @@ export default function useCart() {
     dispatch(updateQuantity({ index, quantity }));
   };
 
+  const handleClearCart = () => {
+    dispatch(clearCart());
+  };
+
   return {
     items: products,
     total: products.reduce((total, item) => {
@@ -24,5 +28,6 @@ export default function useCart() {
     }, 0),
     removeItem,
     updateQuantity: handleUpdateQuantity,
+    clearCart: handleClearCart,
   };
 }

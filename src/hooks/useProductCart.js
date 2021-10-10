@@ -10,16 +10,16 @@ export default function useProductCart(id) {
     return !!exists;
   };
 
-  const addHandler = (product, store_id) => {
+  const addHandler = (product, store) => {
     dispatch(
       addProduct({
         product_id: product.id,
-        store_id,
         max_quantity: product.stock,
         title: product.title,
         price: product.price,
         quantity: 1,
         subtotal: product.price,
+        ...store,
       }),
     );
   };

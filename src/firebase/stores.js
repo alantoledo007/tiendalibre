@@ -12,9 +12,19 @@ export const createStore = (data) => {
   return collection().add(data);
 };
 
-export const getStores = () => {
+export const getStores = (config) => {
+  const ref = collection();
+
+  if (Array.isArray(config.in)) {
+    console.log(config.in);
+    ref.where('id', 'in', config.in);
+  }
+
+  if (!config.market) {
+    ref.where('user_ref', '==', userRef(getCurrentUser().uid));
+  }
+
   return collection()
-    .where('user_ref', '==', userRef(getCurrentUser().uid))
     .get()
     .then((docs) => {
       const data = [];
