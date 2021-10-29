@@ -1,8 +1,8 @@
-import { PRODUCT } from '@/constants/routes';
+import { PRODUCT, STORE } from '@/constants/routes';
 import useProducts from '@/hooks/useProducts';
 import useStore from '@/hooks/useStore';
 import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 export default function Store() {
   const { slug } = useParams();
@@ -17,6 +17,7 @@ export default function Store() {
         <div>La tienda no existe</div>
       ) : (
         <>
+          <Header slug={slug} />
           <ul>
             <li>nombre: {data.name}</li>
           </ul>
@@ -26,6 +27,16 @@ export default function Store() {
     </div>
   );
 }
+
+const Header = ({ slug }) => {
+  return (
+    <nav>
+      <ul>
+        <NavLink to={STORE.replace(':slug', slug)}>Productos</NavLink>
+      </ul>
+    </nav>
+  );
+};
 
 const ProductList = ({ store_id, store_slug }) => {
   const { data, loading } = useProducts(store_id, { market: true });

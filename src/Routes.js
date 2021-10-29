@@ -34,6 +34,7 @@ import {
   AUTH,
   LANDING,
   DASHBOARD as DASHBOARD_LAYOUT,
+  MARKET as MARKET_LAYOUT,
 } from './constants/layouts';
 import useUser from './hooks/useUser';
 
@@ -241,17 +242,17 @@ const landing_routes = [
   //MARKET
   {
     path: CART,
-    component: () => LayoutResolver(Cart, AUTH),
+    component: () => LayoutResolver(Cart, MARKET_LAYOUT),
     exact: true,
   },
   {
     path: STORE,
-    component: () => LayoutResolver(Store, AUTH),
+    component: () => LayoutResolver(Store, MARKET_LAYOUT),
     exact: true,
   },
   {
     path: PRODUCT,
-    component: () => LayoutResolver(Product, AUTH),
+    component: () => LayoutResolver(Product, MARKET_LAYOUT),
     exact: true,
   },
 ];

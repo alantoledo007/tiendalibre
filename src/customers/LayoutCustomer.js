@@ -1,4 +1,4 @@
-import { AUTH, DASHBOARD, LANDING } from '@/constants/layouts';
+import { AUTH, DASHBOARD, LANDING, MARKET } from '@/constants/layouts';
 import { LayoutContext } from '@/providers/LayoutProvider';
 import { Suspense } from 'react';
 import { lazy } from 'react';
@@ -6,6 +6,7 @@ import { lazy } from 'react';
 const LandingLayout = lazy(() => import('@/layouts/LandingLayout'));
 const AuthLayout = lazy(() => import('@/layouts/AuthLayout'));
 const DashboardLayout = lazy(() => import('@/layouts/DashboardLayout'));
+const MarketLayout = lazy(() => import('@/layouts/MarketLayout'));
 
 export default function LayoutCustomer({ children }) {
   const resolver = (layout) => {
@@ -18,6 +19,7 @@ export default function LayoutCustomer({ children }) {
         if (layout === LANDING) return resolver(LandingLayout);
         if (layout === AUTH) return resolver(AuthLayout);
         if (layout === DASHBOARD) return resolver(DashboardLayout);
+        if (layout === MARKET) return resolver(MarketLayout);
         return resolver();
       }}
     </LayoutContext.Consumer>
