@@ -1,8 +1,11 @@
-import { PRODUCT, STORE } from '@/constants/routes';
+import { CART, PRODUCT, STORE } from '@/constants/routes';
 import useProducts from '@/hooks/useProducts';
 import useStore from '@/hooks/useStore';
 import { useParams } from 'react-router';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import LinkCustom from '@/components/shared/LinkCustom';
+import useCart from '@/hooks/useCart';
+import Button from '@/components/shared/Button';
 
 export default function Store() {
   const { slug } = useParams();
@@ -21,7 +24,7 @@ export default function Store() {
           <ul>
             <li>nombre: {data.name}</li>
           </ul>
-          <ProductList store_id={data.id} store_slug={slug} />
+          <ProductList store={data} />
         </>
       )}
     </div>
@@ -38,27 +41,46 @@ const Header = ({ slug }) => {
   );
 };
 
-const ProductList = ({ store_id, store_slug }) => {
+const ProductList = ({ store }) => {
+  const { id: store_id, slug: store_slug, name: store_name } = store;
   const { data, loading } = useProducts(store_id, { market: true });
+  const { checkExists: checkInCart, addToCart } = useCart();
 
   if (loading) {
     return <div>cargando productos...</div>;
   }
 
   return (
-    <div>
+    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
       {data.map((item) => (
-        <div key={item.id}>
-          <div>{item.title}</div>
-          <div>${item.price} ARS</div>
+        <div key={item.id} className="p-5 shadow-lg rounded">
           <div>
-            <Link
+            <h3 className="text-lg">{item.title}</h3>
+          </div>
+          <div>
+            <span className="font-thin text-xl">${item.price}</span>
+          </div>
+          <div className="mt-5 ">
+            <LinkCustom
               to={PRODUCT.replace(':slug', store_slug).replace(
                 ':product_slug',
                 `${item.title.replaceAll(' ', '-')}-${item.id}`,
               )}>
               Ver detalles
-            </Link>
+            </LinkCustom>
+          </div>
+          <div className="mt-5">
+            {checkInCart(item.id) ? (
+              <LinkCustom variant="secondary" to={CART}>
+                Ver carrito
+              </LinkCustom>
+            ) : (
+              <Button
+                variant="secondary"
+                onClick={() => addToCart(item, { store_id, store_name })}>
+                Añadir al carrito
+              </Button>
+            )}
           </div>
         </div>
       ))}

@@ -14,9 +14,9 @@ export default function MarketLayout({ children }) {
           </ul>
         </nav>
       </header>
-      <main>
-        <Suspense fallback={<div>Cargando...</div>}>{children}</Suspense>
-      </main>
+      <Suspense fallback={<div>Cargando...</div>}>
+        <main className="px-5">{children}</main>
+      </Suspense>
     </>
   );
 }

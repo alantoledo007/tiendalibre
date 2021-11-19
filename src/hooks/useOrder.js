@@ -1,9 +1,13 @@
+import ORDER_STATES from '@/constants/order_states';
 import { getOrder, updateOrder } from '@/firebase/orders';
+import { updateProductStock } from '@/firebase/products';
 import { useEffect, useState } from 'react';
 
 export default function useOrder(id, config = {}) {
   const [data, setData] = useState(undefined);
   const [cache, setCache] = useState(undefined);
+
+  console.log(data);
 
   useEffect(() => {
     if (data !== undefined || id === undefined) return;
@@ -44,6 +48,12 @@ export default function useOrder(id, config = {}) {
       .then(() => {
         setCache(undefined);
         setData(undefined);
+
+        if (status === ORDER_STATES.COMPLETED) {
+          data.items.forEach((item) => {
+            updateProductStock(item.id, item.quantity);
+          });
+        }
       })
       .catch(() => {
         Object.values(buttonsRef.current).forEach((item) => {

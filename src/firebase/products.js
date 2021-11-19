@@ -73,3 +73,22 @@ export const updateProduct = (id, data) => {
   data.updated_at = firebase.firestore.FieldValue.serverTimestamp();
   return collection().doc(id).update(data);
 };
+
+const resolveStock = (current, value) => {
+  if (current >= value) {
+    return parseInt(current - value);
+  }
+  return 0;
+};
+
+export function updateProductStock(id, value) {
+  return firebase.firestore().runTransaction(async (transaction) => {
+    // Get post data first
+    const productRef = firebase.firestore().doc(`products/${id}`);
+    const productSnapshot = await transaction.get(productRef);
+
+    transaction.update(productRef, {
+      stock: resolveStock(productSnapshot.data().stock, value),
+    });
+  });
+}
