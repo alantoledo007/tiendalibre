@@ -11,6 +11,10 @@ const inputs = [
     label: 'Nombre de tu tienda',
     inputProps: { type: 'text', name: 'name', id: 'name' },
   },
+  {
+    label: 'E-Mail de ventas',
+    inputProps: { type: 'text', name: 'email', id: 'email' },
+  },
   { label: 'Slug', inputProps: { type: 'text', name: 'slug', id: 'slug' } },
 ];
 

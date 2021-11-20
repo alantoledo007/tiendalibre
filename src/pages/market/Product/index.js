@@ -49,6 +49,7 @@ export default function Product() {
                 addToCart(data, {
                   store_id: data.store.id,
                   store_name: data.store.name,
+                  store_email: data.store.email,
                 })
               }>
               Añadir al carrito

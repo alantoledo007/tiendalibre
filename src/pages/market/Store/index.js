@@ -42,7 +42,12 @@ const Header = ({ slug }) => {
 };
 
 const ProductList = ({ store }) => {
-  const { id: store_id, slug: store_slug, name: store_name } = store;
+  const {
+    id: store_id,
+    slug: store_slug,
+    name: store_name,
+    email: store_email,
+  } = store;
   const { data, loading } = useProducts(store_id, { market: true });
   const { checkExists: checkInCart, addToCart } = useCart();
 
@@ -77,7 +82,9 @@ const ProductList = ({ store }) => {
             ) : (
               <Button
                 variant="secondary"
-                onClick={() => addToCart(item, { store_id, store_name })}>
+                onClick={() =>
+                  addToCart(item, { store_id, store_name, store_email })
+                }>
                 Añadir al carrito
               </Button>
             )}

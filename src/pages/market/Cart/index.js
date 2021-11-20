@@ -101,6 +101,7 @@ const Checkout = ({ items, total, setCheckout, clearCart }) => {
           id: items[0].store_id,
           ref: storeRef(items[0].store_id),
           name: items[0].store_name,
+          email: items[0].store_email,
         },
         items: items.map((item) => ({
           id: item.product_id,
